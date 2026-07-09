@@ -98,3 +98,36 @@ Deferred to the architecture review.
 - Database persistence
 - Real-time monitoring dashboards
 - Multiple deployed models
+
+## Non-Functional requirements
+
+- **NFR-001** The system shall return a prediction within 500 ms after the model has been loaded into memory
+- **NFR-002** The application shall support at least one current prediction request.
+- **NFR-003** The application shall continue serving prediction requests after invalid input requests.
+- **NFR-004** The deployed model shall achieve a macro F1-score of at least 0.90 on the validation dataset.
+- **NFR-005** Source code shall follow PEP 8 conventions.
+- **NFR-006** The application shall include automated unit tests.
+- **NFR-007** All code changes shall be version controlled using Git.
+- **NFR-008** Prediction endpoints shall require API key authentication.
+- **NFR-009** Sensitive configuration shall be stored in environment variables.
+- **NFR-010** The application shall be deployable using Docker.
+- **NFR-011** The application shall log prediction requests and unexpected errors.
+- **NFR-012** Every prediction shall include the model version used.
+- **NFR-013** The API shal provide automatically generated OpenAPI documentation.
+- **NFR-014** Every commit to the repository shall trigger automated tests.
+
+## Assumptions
+
+- **A-001** Input data follows the schema used during model training.
+- **A-002** Sensor measurements are already available before the AP is called.
+- **A-003** Only one prediction is requested per API call in Version 1.
+- **A-004** The deployed model has already been trained and validated.
+
+## Constraints
+
+- **C-001** Version 1 shall support only tabular data.
+- **C-002** The initial implementation shall use scikit-learn
+- **C-003** The project shall use Python 3.x.
+- **C-004** The initial deployment target is a local Docker environment.
+- **C-005** Authentication shall initially be implemented using API keys.
+
