@@ -131,3 +131,121 @@ Deferred to the architecture review.
 - **C-004** The initial deployment target is a local Docker environment.
 - **C-005** Authentication shall initially be implemented using API keys.
 
+## High-Level Architecture
+
+                   Client
+             (MES / QC Software)
+                       │
+                       ▼
+               FastAPI Application
+                       │
+      ┌────────────────┼────────────────┐
+      │                │                │
+      ▼                ▼                ▼
+ Authentication  &emsp;&emsp; Request Validation &emsp;&emsp;&emsp;  Logging \
+     &emsp;&emsp; │ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|    
+
+      └────────────┬───┘
+                   ▼
+         Prediction Service
+                   │
+        ┌──────────┴──────────┐
+        ▼                     ▼
+   Preprocessing     &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;    ML Model \
+&emsp;&emsp;        │    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;                 │       
+&emsp;&emsp;└──────────┬───────┘\
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  ▼ \
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;            Prediction Response
+
+## Architecture decisions records (ADRs)
+
+- **ADR-001** 
+    
+    *Title:*  Use FastAPI as the API framework.
+    
+    *Context:* The system requires request validation, automatic documentation, and high performance.
+
+    *Alternatives:* 
+    - Flask 
+    - Django REST Framework
+
+    *Consequences:*
+    - Automatic OpenAPI documentation
+    - Native PYdantic integration
+    - Async support
+    - Learning curve for deendency injection
+
+- **ADR-002**
+
+    *Title:* Use scikit-learn for Version 1.
+
+    *Alternatives:* 
+    - XGBoost 
+    - LightGBM
+    - TensorFlow
+
+    *Reason:* The project uses tabular data, focuses on software engineering practices, and scikit-learn provides a mature and simple API for classical ML models.
+
+- **ADR-003**
+
+    *Title:* Use Docker.
+
+    *Context:* The application requires a reproducible execution environment that behaves consistently across development, testing, and deployment.
+
+    *Alternatives:* 
+    - Local python execution
+    - Virtual machine deployment
+
+    *Rationale:*  
+    - Reproducible environments
+    - Dependency isolation
+    - Simplified onboarding
+    - Consistent deployment
+    - Easy integration with CI/CD
+    - Cloud portability
+
+- **ADR-004**
+
+    *Title:* Authentication with API Key.
+
+    *Alternatives:* 
+    - JWT
+    - OAuth2
+
+    *Reason:*  Simpler implementation for an internal manufacturing API
+
+- **ADR-005**
+
+    *Title:* Experiment tracking with MLflow.
+
+    *Context:* Multiple model experiments will be performed during development, and experiment reproducibility is required.
+
+    *Alternatives:* 
+    - TensorBoard
+    - Weights & Biases
+    - Manual experiments logs
+
+    *Rationale:*
+    - Track parameters and metrics automatically.
+    - Store trained models as artifacts.
+    - Improve experiment reproducibility.
+    - Simplify comparison of model versions.
+    - Prepare the project for future model registry and deployment workflows.
+
+
+## Risk register
+
+| ID    | Risk                      | Probability | Impact | Mitigation                                         |
+| ----- | ------------------------- | ----------- | ------ | -------------------------------------------------- |
+| R-001 | Model drift               | Medium      | High   | Retrain and monitor performance                    |
+| R-002 | Invalid input values      | High        | Medium | Validate with Pydantic                             |
+| R-003 | API unavailable           | Low         | High   | Docker restart policy and health endpoint          |
+| R-004 | API key compromise        | Low         | High   | Rotate keys and store them securely                |
+| R-005 | Low prediction confidence | Medium      | Medium | Return confidence score and allow client to decide |
+
+
+## Requirements Traceability Matrix (RTM)
+
+| ID    | Risk                      | Probability | Impact | Mitigation                                         |
+| ----- | ------------------------- | ----------- | ------ | -------------------------------------------------- |
+
