@@ -1,6 +1,6 @@
 ## High-Level Architecture
 
-![High-Level Architecture](images/High-Level-Architecture.jpg)
+![High-Level Architecture](diagrams/High-Level-Architecture.jpg)
            
 
 ## Repository Structure
@@ -19,7 +19,7 @@ steel-defect-classifier/
 │
 ├── training/
 ├── tests/
-├── dataset/
+├── data/
 ├── models/
 ├── notebooks/
 ├── docs/
