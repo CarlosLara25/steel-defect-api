@@ -216,7 +216,8 @@ Figure Correlation Matrix shows the correlation matrix of the 27 features.
 - No missing-value imputation is required.
 - Duplicate removal is not required.
 - Binary features will remain unchanged.
-- Outliers will be retained for the baseline model.
+- Outliers will be retained for the baseline model to avoid removing potentially informative defect characteristics.
+- The influence of the identified extreme observations on model performance will be evaluated during preprocessing before applying any outlier handling techniques.
 - Feature scaling will be evaluated during preprocessing.
 - Feature selection is postponed until baseline model evaluation.
 - The dataset exhibits class imbalance; therefore, Macro F1-score will be used in addition to Accuracy.
