@@ -73,6 +73,12 @@ All the instances are uniques, and all their values are non-null. Therefore, dep
 - **24**: Orientation_Index
 - **25**: Luminosity_Index
 
+### 
+
+- 3 features ('TypeOfSteel_A300', 'TypeOfSteel_A400', 'Outside_Global_Index') contains discrete values. 
+- Features 'TypeOfSteel_A300' and 'TypeOfSteel_A400' assume either 0 or 1. For each instance one feature is 1 and the other es 0. 
+- The feature "Outside_Global_Index" only assumes three discrete values (0, 0.5, and 1). However, due to the lack of domain documentation describing its physical meaning, it will be treated as a numerical feature in Version 1. Future iterations may revisit this decision if additional domain knowledge becomes available.
+
 ### Features with constant value:
 0
 
@@ -215,7 +221,8 @@ Figure Correlation Matrix shows the correlation matrix of the 27 features.
 
 - No missing-value imputation is required.
 - Duplicate removal is not required.
-- Binary features will remain unchanged.
+- 2 binary features will remain unchanged ('TypeOfSteel_A300', 'TypeOfSteel_A400').
+- Feature 'Outside_Global_Index' is considered numerical.
 - Outliers will be retained for the baseline model to avoid removing potentially informative defect characteristics.
 - The influence of the identified extreme observations on model performance will be evaluated during preprocessing before applying any outlier handling techniques.
 - Feature scaling will be evaluated during preprocessing.
