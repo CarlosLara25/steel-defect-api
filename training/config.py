@@ -1,7 +1,9 @@
 
 RANDOM_SEED = 42
 
-MAX_ITERATIONS = 100
+MAX_ITERATIONS = 1000
+
+TEST_SIZE = 0.2
 
 TARGET_CLASSES = [
     "Pastry",
@@ -44,3 +46,6 @@ FEATURES = [
 ]
 
 DATASET_PATH ="data/raw/Faults.NNA"
+
+PREPROCESSOR_OUTPUT_PATH = "models/preprocessor.joblib"
+MODEL_OUTPUT_PATH = "models/model.joblib"
