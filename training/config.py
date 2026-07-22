@@ -49,3 +49,5 @@ DATASET_PATH ="data/raw/Faults.NNA"
 
 PREPROCESSOR_OUTPUT_PATH = "models/preprocessor.joblib"
 MODEL_OUTPUT_PATH = "models/model.joblib"
+CONFUSION_MATRIX_PATH = "training/artifacts/confusion_matrix.png"
+CLASSIFICATION_REPORT_PATH = "training/artifacts/classification_report.txt"
