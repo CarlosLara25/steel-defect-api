@@ -1,0 +1,13 @@
+              precision    recall  f1-score   support
+
+       Bumps       0.69      0.57      0.62        81
+   Dirtiness       0.88      0.64      0.74        11
+    K_Scatch       0.93      0.91      0.92        78
+Other_Faults       0.64      0.71      0.67       135
+      Pastry       0.50      0.53      0.52        32
+      Stains       0.86      0.86      0.86        14
+   Z_Scratch       0.82      0.87      0.85        38
+
+    accuracy                           0.72       389
+   macro avg       0.76      0.73      0.74       389
+weighted avg       0.73      0.72      0.72       389
