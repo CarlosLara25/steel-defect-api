@@ -132,24 +132,6 @@ Deferred to the architecture review.
 - **C-005** Authentication shall initially be implemented using API keys.
 
 
-## Architecture decisions records (ADRs)
-
-- **ADR-001** 
-    
-   
-
-- **ADR-002**
-
-   
-
-- **ADR-003**
-
-    
-- **ADR-004**
-
-   
-
-- **ADR-005**
 
 
 
