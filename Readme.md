@@ -23,6 +23,11 @@ Predict the defect category of a manufactured steel plate using production measu
 
  Develop a production-ready ML classification API capable of predicting one of seven defect categories.
 
+## Project Purpose
+
+This repository demonstrates software engineering and machine learning best practices for developing a production-oriented steel defect classification system.
+
+The project follows an incremental development approach, including software requirements, architecture, testing, experiment tracking, and deployment, with each feature documented through GitHub Issues and Pull Requests.
 
 ## Project Status
 
@@ -189,7 +194,6 @@ Each training run records:
 - Confusion matrix
 - Trained model
 - Preprocessor
-
 
 
 ## Future Improvements
