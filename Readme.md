@@ -1,8 +1,8 @@
 
-![High-Level Architecture](docs/diagrams/High-Level-Architecture.jpg)
 
 ## Table of Contents
 
+- [Project Purpose](#project-purpose)
 - [Business Problem](#business-problem)
 - [Goal](#goal)
 - [Project Status](#project-status)
@@ -13,7 +13,15 @@
 - [Preprocessing](#preprocessing)
 - [Baseline Model](#baseline-model)
 - [Experiment Tracking](#experiment-tracking)
-- [Future Improvements](#future-improvements)
+- [Project Roadmap](#project-roadmap)
+
+
+## Project Purpose
+
+This repository demonstrates software engineering and machine learning best practices for developing a production-oriented steel defect classification system.
+
+The project follows an incremental development approach, including software requirements, architecture, testing, experiment tracking, and deployment, with each feature documented through GitHub Issues and Pull Requests.
+
 
 ## Business Problem
 
@@ -23,11 +31,8 @@ Predict the defect category of a manufactured steel plate using production measu
 
  Develop a production-ready ML classification API capable of predicting one of seven defect categories.
 
-## Project Purpose
+![High-Level Architecture](docs/diagrams/High-Level-Architecture.jpg)
 
-This repository demonstrates software engineering and machine learning best practices for developing a production-oriented steel defect classification system.
-
-The project follows an incremental development approach, including software requirements, architecture, testing, experiment tracking, and deployment, with each feature documented through GitHub Issues and Pull Requests.
 
 ## Project Status
 
@@ -42,6 +47,13 @@ The project follows an incremental development approach, including software requ
 - [x] Model evaluation
 - [x] MLflow experiment tracking
 
+### Current Release
+
+**Version:** v0.1.0
+
+**Release name:** Baseline Training Pipeline
+
+This release delivers the first end-to-end machine learning pipeline, including data preprocessing, baseline model training, evaluation, artifact persistence, and experiment tracking with MLflow.
 ## Quick Start
 
 Clone the repository
@@ -196,10 +208,24 @@ Each training run records:
 - Preprocessor
 
 
-## Future Improvements
+## Project Roadmap
 
-- [ ] Random Forest baseline
-- [ ] Hyperparameter tuning
-- [ ] FastAPI inference API
-- [ ] Docker deployment
-- [ ] CI/CD with GitHub Actions
+### v0.2.0
+- Random Forest baseline
+- Compare models using MLflow
+
+### v0.3.0
+- Hyperparameter tuning
+- Model selection
+
+### v0.4.0
+- FastAPI inference API
+
+### v0.5.0
+- Docker deployment
+
+### v0.6.0
+- GitHub Actions CI/CD
+
+### v1.0.0
+- Production-ready steel defect classification service
