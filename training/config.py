@@ -1,9 +1,19 @@
 
-RANDOM_SEED = 42
 
+# -----  logistic regression
+LOGISTIC_REGRESSION = "logistic_regression"
 MAX_ITERATIONS = 1000
 
+
+#-------- random forest
+RANDOM_FOREST = "random_forest" 
+CRITERION = "gini"
+N_ESTIMATORS = 100
+
+
 TEST_SIZE = 0.2
+RANDOM_SEED = 42
+MODEL_NAME = RANDOM_FOREST
 
 TARGET_CLASSES = [
     "Pastry",
@@ -48,6 +58,6 @@ FEATURES = [
 DATASET_PATH ="data/raw/Faults.NNA"
 
 PREPROCESSOR_OUTPUT_PATH = "models/preprocessor.joblib"
-MODEL_OUTPUT_PATH = "models/model.joblib"
-CONFUSION_MATRIX_PATH = "training/artifacts/confusion_matrix.png"
-CLASSIFICATION_REPORT_PATH = "training/artifacts/classification_report.txt"
+MODEL_OUTPUT_PATH = f"models/model_{MODEL_NAME}.joblib"
+CONFUSION_MATRIX_PATH = f"training/artifacts/confusion_matrix_{MODEL_NAME}.png"
+CLASSIFICATION_REPORT_PATH = f"training/artifacts/classification_report_{MODEL_NAME}.txt"

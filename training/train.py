@@ -1,9 +1,14 @@
-from training.baseline_model import build_baseline_model
+from training.baseline_model import build_model
 from training.data_loader import load_training_data
 from training.config import (
     TEST_SIZE,
     MAX_ITERATIONS,
     RANDOM_SEED,
+    MODEL_NAME,
+    N_ESTIMATORS,
+    CRITERION,
+    LOGISTIC_REGRESSION,
+    RANDOM_FOREST,
     MODEL_OUTPUT_PATH,
     PREPROCESSOR_OUTPUT_PATH,
     CONFUSION_MATRIX_PATH,
@@ -59,14 +64,19 @@ def train_baseline_model() -> dict:
         X_train_transformed = preprocessor.fit_transform(X_train)
 
         # build model
-        model = build_baseline_model()
+        model = build_model()
 
         # log parameters
-        mlflow.log_param("model", "LogisticRegression")
-        mlflow.log_param("max_iter", MAX_ITERATIONS)
         mlflow.log_param("test_size", TEST_SIZE)
         mlflow.log_param("random_seed", RANDOM_SEED)
+        mlflow.log_param("model", MODEL_NAME)
 
+        if MODEL_NAME==LOGISTIC_REGRESSION:
+            mlflow.log_param("max_iter", MAX_ITERATIONS)
+        elif MODEL_NAME==RANDOM_FOREST:
+            mlflow.log_param("N_estimators", N_ESTIMATORS)
+            mlflow.log_param("criterion", CRITERION)
+        
 
         # train the model
         model.fit(X_train_transformed, y_train)
