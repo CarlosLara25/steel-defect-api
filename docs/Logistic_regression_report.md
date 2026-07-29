@@ -1,8 +1,22 @@
 
-# Baseline model results
+# logistic regression
+
+## Description
+
+Model used as baseline.
+### Library:
+sklearn.linear_model.LogisticRegression 
+
+### Basic hyperparameters:
+
+- random_state=42
+- max_iter=1000
 
 
-## clasiffication report: 
+## Results
+
+
+### Classification report: 
 | index | failure |       precision  |  recall | f1-score |  support|
 |---|--------|-------------------|---------|----------|--------|
 | 0 |Bumps    |   0.69   |   0.57  |    0.62   |     81|
@@ -14,7 +28,7 @@
 | 6 |Z_Scratch   |    0.82  |    0.87   |   0.85 |       38|
 |
 
-### Global:
+#### Global:
 
 **accuracy:**  0.72 
 
@@ -24,9 +38,9 @@
 |weighted   |  0.73   |   0.72   |   0.72   |    389|
 
 
-## Confusion matrix
+### Confusion matrix
 
-![Confusion_matrix](images/confusion_matrix_loggistic_regression.png)
+![Confusion_matrix](../training/artifacts/confusion_matrix_logistic_regression.png)
 
 
 ## Conclusion 

@@ -6,6 +6,7 @@
 - [Business Problem](#business-problem)
 - [Goal](#goal)
 - [Project Status](#project-status)
+- [Quick Start](#quick-start)
 - [Dataset](#dataset)
 - [Software Requirements Specification](#software-requirements-specification-srs)
 - [Architecture and  Repository Structure](#architecture-and-repository-structure)
@@ -45,15 +46,19 @@ Predict the defect category of a manufactured steel plate using production measu
 - [x] Unit tests
 - [x] Baseline Logistic Regression model
 - [x] Model evaluation
+- [x] Random Forest baseline
+- [x] XGBoost baseline
+- [x] Model comparison
 - [x] MLflow experiment tracking
 
 ### Current Release
 
-**Version:** v0.1.0
+**Version:** v0.2.0
 
-**Release name:** Baseline Training Pipeline
 
-This release delivers the first end-to-end machine learning pipeline, including data preprocessing, baseline model training, evaluation, artifact persistence, and experiment tracking with MLflow.
+**Releaase name** Multiple Baseline Models and Model Evaluation
+
+This release expands the machine learning pipeline to support multiple baseline algorithms, including Logistic Regression, Random Forest, and XGBoost. It introduces a generalized model factory, comparative model evaluation, MLflow experiment tracking across multiple models, and comprehensive reporting to support model selection prior to hyperparameter optimization.
 ## Quick Start
 
 Clone the repository
@@ -76,8 +81,25 @@ Install
 pip install -r requirements.txt
 ```
 
-Train
+Train a model
+
+Select the desired model in:
+
+```python
+training/config.py
+
+MODEL_NAME = RANDOM_FOREST
 ```
+
+Available options:
+
+- LOGISTIC_REGRESSION
+- RANDOM_FOREST
+- XGBOOST
+
+Then run:
+
+```bash
 python -m training.train
 ```
 Launch MLflow
@@ -167,11 +189,12 @@ Full preprocessing documentatioon can be found in [`docs/Preprocessing.md`](docs
 
 ## Baseline Model
 
-Current baseline:
-
-- Logistic Regression
 - Stratified train/test split
 - StandardScaler preprocessing
+- Models evaluated:
+  - Logistic Regression
+  - Random forest
+  - XGBoost
 - Evaluation metrics:
   - Accuracy
   - Precision
@@ -182,18 +205,27 @@ Current baseline:
 
 Full baseline model documentation can be found in [`docs/baseline_model_design.md`](docs/baseline_model_design.md) 
 
-### Results 
+For detailed evaluation reports, confusion matrices, and model analysis, see:
 
-Baseline Logistic Regression
+- [`docs/logistic_regression_report.md`](docs/Logistic_regression_report.md)
+- [`docs/random_forest_report.md`](docs/Random_forest_report.md)
+- [`docs/xgboost_report.md`](docs/xgboost_report.md)
 
-| Metric | Value |
-|---------|------:|
-| Accuracy | 0.72 |
-| Macro Precision | 0.76 |
-| Macro Recall | 0.73 |
-| Macro F1 | 0.74 |
+### Current Results 
 
-The result documentation can be found in [`docs/Results.md`](docs/Results.md)
+| model | accuracy |      precision macro  |  recall macro | f1-score macro |f1-score weighted|  note|
+|--------|--------|-----------|---------|----------|---|-----|
+|logistic regression  | 0.72  |    0.76  |    0.73   |   0.74   | 0.72 |  baseline|
+|random forest  | 0.80  |   **0.85**   |   0.79   |   **0.82**   | 0.80 |    candidate|
+|XGBoost    |  **0.81**   |  0.82   |   **0.81**   |  0.81  |  **0.81** | candidate |
+
+#### Current candidate models:
+- random forest
+- XGBoost
+### Conclusion 
+Random Forest and XGBoost significantly outperform the initial Logistic Regression baseline. While Random Forest achieved the highest Macro F1-score (0.82), XGBoost obtained the highest overall accuracy (0.81), weighted F1-score (0.81), and macro recall (0.81). Given the small performance difference, both models have been selected as candidate models for the hyperparameter optimization stage.
+
+The result documentation can be found in [`docs/comparison_models.md`](docs/comparison_models.md)
 
 ## Experiment Tracking
 
@@ -210,9 +242,6 @@ Each training run records:
 
 ## Project Roadmap
 
-### v0.2.0
-- Random Forest baseline
-- Compare models using MLflow
 
 ### v0.3.0
 - Hyperparameter tuning

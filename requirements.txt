@@ -7,3 +7,4 @@ mlflow
 pytest
 jupyter
 ipykernel
+xgboost

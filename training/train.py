@@ -1,15 +1,25 @@
-from training.baseline_model import build_baseline_model
+from training.baseline_model import build_model
 from training.data_loader import load_training_data
 from training.config import (
     TEST_SIZE,
     MAX_ITERATIONS,
     RANDOM_SEED,
+    MODEL_NAME,
+    N_ESTIMATORS,
+    CRITERION,
+    LOGISTIC_REGRESSION,
+    RANDOM_FOREST,
+    XGBOOST,
+    XGB_MAX_DEPTH,
+    XGB_LEARNING_RATE,
     MODEL_OUTPUT_PATH,
     PREPROCESSOR_OUTPUT_PATH,
     CONFUSION_MATRIX_PATH,
     CLASSIFICATION_REPORT_PATH,
+    LABEL_ENCODER_OUTPUT_PATH,
 )
 from training.evaluate import evaluate_model
+from training.target_encoder import fit_label_encoder
 
 from app.preprocessing.pipeline import build_preprocessor
 from sklearn.model_selection  import train_test_split
@@ -51,6 +61,16 @@ def train_baseline_model() -> dict:
             stratify=y,
             random_state=RANDOM_SEED,
             )
+        
+
+        if MODEL_NAME == XGBOOST:
+            encoder, y_train = fit_label_encoder(y_train)
+            joblib.dump(
+                encoder,
+                LABEL_ENCODER_OUTPUT_PATH,
+            )
+            y_test = encoder.transform(y_test)
+
 
         # build preprocessor
         preprocessor = build_preprocessor()
@@ -59,14 +79,22 @@ def train_baseline_model() -> dict:
         X_train_transformed = preprocessor.fit_transform(X_train)
 
         # build model
-        model = build_baseline_model()
+        model = build_model()
 
         # log parameters
-        mlflow.log_param("model", "LogisticRegression")
-        mlflow.log_param("max_iter", MAX_ITERATIONS)
         mlflow.log_param("test_size", TEST_SIZE)
         mlflow.log_param("random_seed", RANDOM_SEED)
+        mlflow.log_param("model", MODEL_NAME)
 
+        if MODEL_NAME==LOGISTIC_REGRESSION:
+            mlflow.log_param("max_iter", MAX_ITERATIONS)
+        elif MODEL_NAME==RANDOM_FOREST:
+            mlflow.log_param("N_estimators", N_ESTIMATORS)
+            mlflow.log_param("criterion", CRITERION)
+        elif MODEL_NAME==XGBOOST:
+            mlflow.log_param("max_depth", XGB_MAX_DEPTH)
+            mlflow.log_param("learning_rate", XGB_LEARNING_RATE)
+        
 
         # train the model
         model.fit(X_train_transformed, y_train)
