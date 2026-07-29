@@ -3,8 +3,8 @@
 | model | accuracy |      precision macro  |  recall macro | f1-score macro |f1-score weighted|  note|
 |--------|--------|-----------|---------|----------|---|-----|
 |logistic regression  | 0.72  |    0.76  |    0.73   |   0.74   | 0.72 |  baseline|
-|random forest  | 0.80  |   0.85   |   0.79   |   0.82   | 0.80 |    current best|
-|XGboost    |  -   |  -   |   -   |  -  |  - |planned|
+|random forest  | 0.80  |   **0.85**   |   0.79   |   **0.82**   | 0.80 |    candidate|
+|XGboost    |  **0.81**   |  0.82   |   **0.81**   |  0.81  |  **0.81** | candidate |
 
-
-Macro F1 was selected as the primary evaluation metric because the dataset is imbalanced and the objective is to achieve good performance across all seven defect classes rather than favoring the most frequent defects.
+## Conclusion 
+Logistic Regression established the initial baseline. Random Forest and XGBoost both provided substantial improvements. Random Forest achieved the highest Macro F1-score (0.82), while XGBoost obtained the highest overall accuracy (0.81), weighted F1-score (0.81), and macro recall (0.81). Since the performance difference between the two tree-based models is small, both were selected as candidates for the subsequent hyperparameter tuning stage.

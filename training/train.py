@@ -9,12 +9,17 @@ from training.config import (
     CRITERION,
     LOGISTIC_REGRESSION,
     RANDOM_FOREST,
+    XGBOOST,
+    XGB_MAX_DEPTH,
+    XGB_LEARNING_RATE,
     MODEL_OUTPUT_PATH,
     PREPROCESSOR_OUTPUT_PATH,
     CONFUSION_MATRIX_PATH,
     CLASSIFICATION_REPORT_PATH,
+    LABEL_ENCODER_OUTPUT_PATH,
 )
 from training.evaluate import evaluate_model
+from training.target_encoder import fit_label_encoder
 
 from app.preprocessing.pipeline import build_preprocessor
 from sklearn.model_selection  import train_test_split
@@ -56,6 +61,16 @@ def train_baseline_model() -> dict:
             stratify=y,
             random_state=RANDOM_SEED,
             )
+        
+
+        if MODEL_NAME == XGBOOST:
+            encoder, y_train = fit_label_encoder(y_train)
+            joblib.dump(
+                encoder,
+                LABEL_ENCODER_OUTPUT_PATH,
+            )
+            y_test = encoder.transform(y_test)
+
 
         # build preprocessor
         preprocessor = build_preprocessor()
@@ -76,6 +91,9 @@ def train_baseline_model() -> dict:
         elif MODEL_NAME==RANDOM_FOREST:
             mlflow.log_param("N_estimators", N_ESTIMATORS)
             mlflow.log_param("criterion", CRITERION)
+        elif MODEL_NAME==XGBOOST:
+            mlflow.log_param("max_depth", XGB_MAX_DEPTH)
+            mlflow.log_param("learning_rate", XGB_LEARNING_RATE)
         
 
         # train the model

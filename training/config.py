@@ -10,11 +10,19 @@ RANDOM_FOREST = "random_forest"
 CRITERION = "gini"
 N_ESTIMATORS = 100
 
+#----------xgboost
+XGBOOST = "xgboost"
+XGB_MAX_DEPTH = 10
+XGB_LEARNING_RATE = 0.3
 
+#-----------General
 TEST_SIZE = 0.2
 RANDOM_SEED = 42
-MODEL_NAME = RANDOM_FOREST
 
+MODEL_NAME = XGBOOST
+
+
+#----------------Classes
 TARGET_CLASSES = [
     "Pastry",
     "Z_Scratch",
@@ -61,3 +69,4 @@ PREPROCESSOR_OUTPUT_PATH = "models/preprocessor.joblib"
 MODEL_OUTPUT_PATH = f"models/model_{MODEL_NAME}.joblib"
 CONFUSION_MATRIX_PATH = f"training/artifacts/confusion_matrix_{MODEL_NAME}.png"
 CLASSIFICATION_REPORT_PATH = f"training/artifacts/classification_report_{MODEL_NAME}.txt"
+LABEL_ENCODER_OUTPUT_PATH = f"models/label_encoding_{MODEL_NAME}.joblib"
