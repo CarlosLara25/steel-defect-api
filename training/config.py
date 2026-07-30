@@ -21,6 +21,12 @@ RANDOM_SEED = 42
 
 MODEL_NAME = XGBOOST
 
+#---------model selection
+#---------RandomizedSearchCV
+N_ITER = 20
+CV = 5
+SCORING = "f1_macro"
+
 
 #----------------Classes
 TARGET_CLASSES = [
@@ -69,4 +75,4 @@ PREPROCESSOR_OUTPUT_PATH = "models/preprocessor.joblib"
 MODEL_OUTPUT_PATH = f"models/model_{MODEL_NAME}.joblib"
 CONFUSION_MATRIX_PATH = f"training/artifacts/confusion_matrix_{MODEL_NAME}.png"
 CLASSIFICATION_REPORT_PATH = f"training/artifacts/classification_report_{MODEL_NAME}.txt"
-LABEL_ENCODER_OUTPUT_PATH = f"models/label_encoding_{MODEL_NAME}.joblib"
+LABEL_ENCODER_OUTPUT_PATH = f"models/label_encoding.joblib"
