@@ -65,7 +65,7 @@ def track_experiment(model_name, search_file):
 
 def evaluate_best_candidate(model_name, search_file, x_test, y_test, encoder=None):
 
-    with mlflow.start_run(run_name=f"Best_{model_name}"):
+    with mlflow.start_run(run_name=f"Tuned_{model_name}"):
 
         y_pred = search_file.predict(x_test)
 
@@ -76,7 +76,12 @@ def evaluate_best_candidate(model_name, search_file, x_test, y_test, encoder=Non
         mlflow.log_params(search_file.best_params_)
 
         # Calculate metrics
-        evaluation = evaluate_model(y_test=y_test, y_pred=y_pred)
+        evaluation = evaluate_model(
+            y_test = y_test, 
+            y_pred = y_pred, 
+            confusion_matrix_path = f"training/artifacts/confusion_matrix_tuned_{model_name}.png",
+            classification_report_path= f"training/artifacts/classification_report_tuned_{model_name}.txt"
+            )
 
         mlflow.log_metrics(evaluation)
 
@@ -134,7 +139,7 @@ def experiment_model_selection():
     #---------------------------------   
 
     model_RF = RandomForestClassifier(random_state=RANDOM_SEED)
-
+    model_name_RF = RANDOM_FOREST
     search_RF = tune_model(
         model=model_RF,
         param_distributions=PARAM_DISTRIBUTIONS_RF,
@@ -144,13 +149,13 @@ def experiment_model_selection():
 
     joblib.dump(
         search_RF.best_estimator_,
-        f"models/model_best_random_forest.joblib",
+        f"models/model_tuned_{model_name_RF}.joblib",
         )
    
-    track_experiment("random forest", search_RF)
+    track_experiment(model_name_RF, search_RF)
 
     evaluate_best_candidate(
-        "best_random_forest",
+        model_name_RF,
         search_RF,
         X_test_transformed,
         y_test
@@ -170,6 +175,7 @@ def experiment_model_selection():
 
     model_XGBoost = XGBClassifier(
         random_state=RANDOM_SEED)
+    model_name_XG = XGBOOST
 
     search_XG = tune_model(
         model=model_XGBoost,
@@ -180,12 +186,12 @@ def experiment_model_selection():
     
     joblib.dump(
         search_XG.best_estimator_,
-        f"models/model_best_XGBoost.joblib",
+        f"models/model_tuned_{model_name_XG}.joblib",
         )
     
-    track_experiment("XGBoost", search_XG)
+    track_experiment(model_name_XG, search_XG)
 
-    evaluate_best_candidate("best_XGBoost", search_XG, X_test_transformed, y_test, encoder=encoder)
+    evaluate_best_candidate(model_name_XG, search_XG, X_test_transformed, y_test, encoder=encoder)
 
    
 
