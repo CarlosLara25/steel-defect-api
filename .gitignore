@@ -10,3 +10,7 @@ venv/
 # IDE
 .vscode/
 .idea/
+
+# MLflow local files
+mlflow.db
+mlruns/
