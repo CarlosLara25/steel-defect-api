@@ -18,7 +18,12 @@ from sklearn.metrics import (
 )
 
 
-def plot_consufion_matrix(confusion_matrix_df, show_plots) -> None:
+def plot_consufion_matrix(
+        confusion_matrix_df, 
+        show_plots, 
+        confusion_matrix_path
+        ) -> None:
+
 
     plt.figure(figsize=(6, 4))
     sns.heatmap(confusion_matrix_df, annot=True, fmt='d', cmap='Blues')
@@ -27,28 +32,41 @@ def plot_consufion_matrix(confusion_matrix_df, show_plots) -> None:
     plt.ylabel('True Label')
     plt.xlabel('Predicted Label')
     
-    Path(CONFUSION_MATRIX_PATH).parent.mkdir(
+    Path(confusion_matrix_path).parent.mkdir(
         parents=True,
         exist_ok=True,
     )
 
-    plt.savefig(CONFUSION_MATRIX_PATH)
+    plt.savefig(confusion_matrix_path)
 
     if show_plots:
         plt.show()
 
 
-def save_classification_report_txt(classification_report_txt: str) ->None:
+
+def save_classification_report_txt(
+        classification_report_txt: str, 
+        classification_report_path
+        ) ->None:
     
-    Path(CLASSIFICATION_REPORT_PATH).parent.mkdir(
+    Path(classification_report_path).parent.mkdir(
         parents=True,
         exist_ok=True,
     )
-    with open(CLASSIFICATION_REPORT_PATH, 'w') as fp:
+    
+    with open(classification_report_path, 'w') as fp:
         fp.write(classification_report_txt)
 
 
-def evaluate_model(y_test, y_pred, show_plots=False) -> dict:
+
+def evaluate_model(
+        y_test,
+        y_pred, 
+        show_plots=False, 
+        confusion_matrix_path=CONFUSION_MATRIX_PATH, 
+        classification_report_path=CLASSIFICATION_REPORT_PATH,
+        ) -> dict:
+
    # Calculate metrics
     #--------------------------------------------------
     accuracy = accuracy_score(
@@ -91,8 +109,15 @@ def evaluate_model(y_test, y_pred, show_plots=False) -> dict:
         "f1": f1,
     }
 
-    plot_consufion_matrix(CM, show_plots=show_plots)
-    save_classification_report_txt(CR)
+    plot_consufion_matrix(
+        confusion_matrix_df = CM,
+        show_plots = show_plots, 
+        confusion_matrix_path= confusion_matrix_path
+        )
+    save_classification_report_txt(
+        classification_report_txt = CR, 
+        classification_report_path = classification_report_path
+        )
 
     return metrics_output
     #-----------------------------------------------------
