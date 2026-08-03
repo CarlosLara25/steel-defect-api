@@ -7,12 +7,12 @@ from training.config import (
     RANDOM_SEED,
 )
 
-def tune_model(model, param_distributions, X_train, y_train):
+def tune_model(model, param_distributions, X_train, y_train, n_iterations=N_ITER):
 
     search = RandomizedSearchCV(
         estimator=model,
         param_distributions=param_distributions,
-        n_iter=N_ITER,
+        n_iter=n_iterations,
         cv=CV,
         scoring=SCORING,
         random_state=RANDOM_SEED,
