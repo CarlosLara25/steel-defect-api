@@ -14,3 +14,11 @@ PARAM_DISTRIBUTIONS_XG = dict(
         subsample=[0.5, 0.7, 1.0],
         colsample_bytree=[0.7, 0.8, 1.0], 
     )
+
+PARAM_DISTRIBUTIONS_XG_EXP2 = dict(
+        n_estimators=[100, 300, 500, 700],
+        learning_rate=[0.01, 0.03, 0.05, 0.07, 0.1, 0.13, 0.15],
+        max_depth=[7, 9, 11],
+        subsample=[0.4, 0.5, 0.6, 0.7, 0.8],
+        colsample_bytree=[0.7, 0.8, 0.9, 1.0], 
+    )

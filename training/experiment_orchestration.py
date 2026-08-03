@@ -16,6 +16,7 @@ from training.evaluate import evaluate_model
 from training.parameters_distributions import (
     PARAM_DISTRIBUTIONS_RF,
     PARAM_DISTRIBUTIONS_XG,
+    PARAM_DISTRIBUTIONS_XG_EXP2,
 )
 
 from app.preprocessing.pipeline import build_preprocessor
@@ -104,7 +105,7 @@ def evaluate_best_candidate(model_name, search_file, x_test, y_test, encoder=Non
 
 def experiment_model_selection():
     '''
-    Execute the experiment reported in docs\Hyperparameter_tuning_strategy.md
+    Execute the experiment reported in docs.Hyperparameter_tuning_strategy.md
 
     '''
 
@@ -195,8 +196,74 @@ def experiment_model_selection():
 
    
 
+def experiment_XG_refinement():
+    '''
+    Execute the refinement experiment for XG, reported in 
+    docs.Hyperparameter_tuning_report.md
+    param_distributions in 
+    training.parameters_distributions.PARAM_DISTRIBUTIONS_XG_EXP2
+    '''
+
+    #---------------------------------   
+    # Load and split data
+    #---------------------------------
+    X, y = load_training_data()
+    X_train, X_test, y_train, y_test = train_test_split(
+            X,
+            y,
+            test_size=TEST_SIZE,
+            stratify=y,
+            random_state=RANDOM_SEED,
+            )
+
+    #---------------------------------   
+    # Preprocessing
+    #---------------------------------
+
+    preprocessor = build_preprocessor()
+
+    X_train_transformed = preprocessor.fit_transform(X_train)
+    X_test_transformed = preprocessor.transform(X_test)
+
+    joblib.dump(
+        preprocessor,
+        PREPROCESSOR_OUTPUT_PATH,
+        )
+    
+    #---------------------------------   
+    #----------------XGBoost
+    #---------------------------------   
+   
+    encoder, y_train_encoded = fit_label_encoder(y_train)
+ 
+    joblib.dump(
+        encoder,
+        LABEL_ENCODER_OUTPUT_PATH,
+        )
+
+    model_XGBoost = XGBClassifier(
+        random_state=RANDOM_SEED)
+    model_name_XG = "refined_"+XGBOOST
+
+    search_XG = tune_model(
+        model=model_XGBoost,
+        param_distributions=PARAM_DISTRIBUTIONS_XG_EXP2,
+        X_train=X_train_transformed,
+        y_train=y_train_encoded,
+        n_iterations=50
+        )
+    
+    joblib.dump(
+        search_XG.best_estimator_,
+        f"models/model_tuned_{model_name_XG}.joblib",
+        )
+    
+    track_experiment(model_name_XG, search_XG)
+
+    evaluate_best_candidate(model_name_XG, search_XG, X_test_transformed, y_test, encoder=encoder)
+
 
 
 if __name__ == "__main__":
-    experiment_model_selection()
+    experiment_XG_refinement()
 
