@@ -1,0 +1,15 @@
+{
+    "test_size": 0.2,
+    "random_seed": 42,
+    "model_type": "xgboost",
+    "version": "1.0.0",
+    "selection_metric": "macro_f1",
+    "source_experiment": "XGBoost Refinement Experiment 2",
+    "cv_macro_f1": 0.8268,
+    "test_macro_f1": 0.8227,
+    "max_depth": 9,
+    "learning_rate": 0.03,
+    "n_estimators": 700,
+    "subsample": 0.6,
+    "colsample_bytree": 0.9
+}

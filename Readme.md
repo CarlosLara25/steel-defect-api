@@ -12,9 +12,10 @@
 - [Architecture and  Repository Structure](#architecture-and-repository-structure)
 - [Exploratory Data Analysis](#exploratory-data-analysis)
 - [Preprocessing](#preprocessing)
-- [Baseline Model](#baseline-model)
+- [Model Development & Selection](#model-development-&-selection)
 - [Experiment Tracking](#experiment-tracking)
 - [Project Roadmap](#project-roadmap)
+- [Release History](#release-history)
 
 
 ## Project Purpose
@@ -50,13 +51,31 @@ Predict the defect category of a manufactured steel plate using production measu
 - [x] XGBoost baseline
 - [x] Model comparison
 - [x] MLflow experiment tracking
+- [x] XGBoost refinement
+- [x] Build and persist final model artifacts
+- [x] Sanity tests
+- [x] MLflow final mdoel tracking
+
 
 ### Current Release
 
-**Version:** v0.2.0
+**Version:** v0.3.0  
 
+**Release name:** Model Selection & Final Training
 
-**Releaase name** Multiple Baseline Models and Model Evaluation
+This release completes the model development and selection process.
+Random Forest and XGBoost were evaluated and tuned using stratified
+cross-validation with Macro F1 as the primary selection metric.
+
+XGBoost was selected as the final model candidate after achieving the
+best cross-validated Macro F1.
+
+The selected model, preprocessing pipeline, label encoder, and metadata
+are persisted as versioned artifacts and validated through automated
+sanity tests.
+
+The next milestone focuses on exposing the trained model through a
+FastAPI inference service.
 
 This release expands the machine learning pipeline to support multiple baseline algorithms, including Logistic Regression, Random Forest, and XGBoost. It introduces a generalized model factory, comparative model evaluation, MLflow experiment tracking across multiple models, and comprehensive reporting to support model selection prior to hyperparameter optimization.
 ## Quick Start
@@ -102,11 +121,17 @@ Then run:
 ```bash
 python -m training.train
 ```
+
+Training slected model
+
+```bash
+python -m training.train_selected_model
+```
+
 Launch MLflow
 ```
 mlflow ui
 ```
-
 
 ## Dataset
 
@@ -187,68 +212,92 @@ Current preprocessing pipeline:
 
 Full preprocessing documentatioon can be found in [`docs/Preprocessing.md`](docs/Preprocessing.md)
 
-## Baseline Model
+## Model Development & Selection
 
-- Stratified train/test split
-- StandardScaler preprocessing
-- Models evaluated:
-  - Logistic Regression
-  - Random forest
-  - XGBoost
-- Evaluation metrics:
-  - Accuracy
-  - Precision
-  - Recall
-  - Macro F1
-- Classification report
-- Confusion matrix
+The project evaluates multiple machine learning models using a stratified
+train/test split and a preprocessing pipeline based on `StandardScaler`.
 
-Full baseline model documentation can be found in [`docs/baseline_model_design.md`](docs/baseline_model_design.md) 
+### Models evaluated
 
-For detailed evaluation reports, confusion matrices, and model analysis, see:
-
-- [`docs/logistic_regression_report.md`](docs/Logistic_regression_report.md)
-- [`docs/random_forest_report.md`](docs/Random_forest_report.md)
-- [`docs/xgboost_report.md`](docs/xgboost_report.md)
-
-### Current Results 
-
-| model | accuracy |      precision macro  |  recall macro | f1-score macro |f1-score weighted|  note|
-|--------|--------|-----------|---------|----------|---|-----|
-|logistic regression  | 0.72  |    0.76  |    0.73   |   0.74   | 0.72 |  baseline|
-|random forest  | 0.80  |   **0.85**   |   0.79   |   **0.82**   | 0.80 |    candidate|
-|XGBoost    |  **0.81**   |  0.82   |   **0.81**   |  0.81  |  **0.81** | candidate |
-
-#### Current candidate models:
-- random forest
+- Logistic Regression
+- Random Forest
 - XGBoost
-### Conclusion 
-Random Forest and XGBoost significantly outperform the initial Logistic Regression baseline. While Random Forest achieved the highest Macro F1-score (0.82), XGBoost obtained the highest overall accuracy (0.81), weighted F1-score (0.81), and macro recall (0.81). Given the small performance difference, both models have been selected as candidate models for the hyperparameter optimization stage.
 
-The result documentation can be found in [`docs/comparison_models.md`](docs/comparison_models.md)
+### Model selection process
+
+The initial baseline experiment was followed by hyperparameter tuning of
+the Random Forest and XGBoost candidate models.
+
+The primary model selection metric is **Macro F1-score**, with stratified
+5-fold cross-validation used during hyperparameter optimization.
+
+Two XGBoost tuning experiments were performed. The second experiment
+focused the search on promising regions identified during the first
+experiment.
+
+Further manual refinement was stopped because the second experiment did
+not improve held-out test performance and did not provide sufficient
+evidence for another focused search.
+
+### Selected model
+
+**XGBoost**
+
+Selected configuration:
+
+| Hyperparameter | Value |
+|---|---:|
+| n_estimators | 700 |
+| learning_rate | 0.03 |
+| max_depth | 9 |
+| subsample | 0.6 |
+| colsample_bytree | 0.9 |
+
+### Final candidate performance
+
+| Metric | Value |
+|---|---:|
+| Cross-validated Macro F1 | 0.8268 |
+| Held-out Test Macro F1 | 0.8227 |
+
+The selected model, preprocessing pipeline, label encoder, and metadata
+are persisted as model artifacts and validated through automated sanity
+tests.
+
+Detailed documentation:
+
+- [`docs/baseline_model_design.md`](docs/baseline_model_design.md)
+- [`docs/hyperparameter_tuning_strategy.md`](docs/Hyperparameter_tuning_strategy.md)
+- [`docs/hyperparameter_tuning_report.md`](docs/Hyperparameter_tuning_report.md)
+
 
 ## Experiment Tracking
 
 Experiments are tracked using MLflow.
 
-Each training run records:
+MLflow was used throughout model development to track:
 
-- Training parameters
-- Evaluation metrics
-- Confusion matrix
-- Trained model
-- Preprocessor
+- Model configurations
+- Hyperparameters
+- Cross-validation metrics
+- Model selection experiments
+- Training artifacts
+- Final model training
+
+Hyperparameter tuning experiments record individual candidate
+configurations and their cross-validation results.
+
+The final selected model training is also tracked as a separate MLflow run,
+including the selected hyperparameters and persisted model artifacts.
 
 
 ## Project Roadmap
 
-
-### v0.3.0
-- Hyperparameter tuning
-- Model selection
-
 ### v0.4.0
 - FastAPI inference API
+- Model artifact loading
+- Request validation
+- Prediction endpoint
 
 ### v0.5.0
 - Docker deployment
@@ -258,3 +307,14 @@ Each training run records:
 
 ### v1.0.0
 - Production-ready steel defect classification service
+
+## Release History
+
+**Version:** v0.1.0 \
+**Releaase name** Baseline model
+
+**Version:** v0.2.0 \
+**Releaase name** Multiple Baseline Models and Model Evaluation
+
+**Version:** v0.3.0  \
+**Release name:** Model Selection & Final Training

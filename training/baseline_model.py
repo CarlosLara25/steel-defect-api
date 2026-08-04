@@ -13,6 +13,11 @@ from training.config import (
     XGBOOST,
     XGB_MAX_DEPTH,
     XGB_LEARNING_RATE,
+    XGB_SELECTED_LEARNING_RATE,
+    XGB_SELECTED_N_ESTIMATORS,
+    XGB_SELECTED_MAX_DEPTH,
+    XGB_SELECTED_SUBSAMPLE,
+    XGB_SELECTED_COLSAMPLE,
 )
 
 def build_model():
@@ -37,6 +42,18 @@ def build_model():
         raise ValueError(
         f"Unsupported model '{MODEL_NAME}'."
     )
+
+def build_selected_xgboost():
+    return XGBClassifier(
+                random_state=RANDOM_SEED,
+                n_estimators = XGB_SELECTED_N_ESTIMATORS,
+                max_depth=XGB_SELECTED_MAX_DEPTH,
+                learning_rate=XGB_SELECTED_LEARNING_RATE,
+                subsample=XGB_SELECTED_SUBSAMPLE,
+                colsample_bytree=XGB_SELECTED_COLSAMPLE,
+        )
+
+
 
 
 
