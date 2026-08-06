@@ -52,12 +52,12 @@ XGB_SELECTION_METRIC = "macro_f1"
 XGB_CV_MACRO_F1 = 0.8268
 XGB_TEST_MACRO_F1 = 0.8227
 
-PREPROCESSOR_OUTPUT_PATH_SELECTED = "models/selected/preprocessor.joblib"
-MODEL_OUTPUT_PATH_SELECTED = f"models/selected/model_{MODEL_NAME}_{VERSION_MODEL}.joblib"
-CONFUSION_MATRIX_PATH_SELECTED = f"training/artifacts/confusion_matrix_{MODEL_NAME}_{VERSION_MODEL}.png"
-CLASSIFICATION_REPORT_PATH_SELECTED = f"training/artifacts/classification_report_{MODEL_NAME}_{VERSION_MODEL}.txt"
-LABEL_ENCODER_OUTPUT_PATH_SELECTED = f"models/selected/label_encoding_{MODEL_NAME}_{VERSION_MODEL}.joblib"
-METADATA_PATH_SELECTED = f"models/selected/metadata_{MODEL_NAME}_{VERSION_MODEL}.json"
+PREPROCESSOR_OUTPUT_PATH_SELECTED = f"models/selected/preprocessor_{MODEL_TYPE}_{VERSION_MODEL}.joblib"
+MODEL_OUTPUT_PATH_SELECTED = f"models/selected/model_{MODEL_TYPE}_{VERSION_MODEL}.joblib"
+CONFUSION_MATRIX_PATH_SELECTED = f"training/artifacts/confusion_matrix_{MODEL_TYPE}_{VERSION_MODEL}.png"
+CLASSIFICATION_REPORT_PATH_SELECTED = f"training/artifacts/classification_report_{MODEL_TYPE}_{VERSION_MODEL}.txt"
+LABEL_ENCODER_OUTPUT_PATH_SELECTED = f"models/selected/label_encoding_{MODEL_TYPE}_{VERSION_MODEL}.joblib"
+METADATA_PATH_SELECTED = f"models/selected/metadata_{MODEL_TYPE}_{VERSION_MODEL}.json"
 
 
 #----------------Dataset and Classes
