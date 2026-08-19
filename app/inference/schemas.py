@@ -38,7 +38,7 @@ class PredictionRequest(BaseModel):
 
 
 class ResponseSchema(BaseModel):
-        request_ID: str
+        request_id: str
         prediction: str
         confidence: float = Field(ge=0, le=1)
         model_version: str
