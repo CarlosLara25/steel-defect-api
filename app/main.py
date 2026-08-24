@@ -1,12 +1,16 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from contextlib import asynccontextmanager
 
 from app.inference.schemas import PredictionRequest, ResponseSchema
 
+
 from app.inference.loader import load_inference_artifacts
+
+from app.dependencies import verify_api_key
 
 from uuid import uuid4
 from datetime import datetime, timezone
+
 
 import pandas as pd
 
@@ -32,8 +36,12 @@ app = FastAPI(
 def health():
     return {"status": "ok"}
 
+
 @app.post("/predict", response_model=ResponseSchema)
-def prediction(data_request: PredictionRequest):
+def prediction(data_request: PredictionRequest,
+               _: None = Depends(verify_api_key),
+               ):
+
     model = app.state.model
     preprocessor = app.state.preprocessor
     encoder = app.state.encoder
