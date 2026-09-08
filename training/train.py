@@ -28,7 +28,7 @@ import joblib
 import mlflow
 
 
-def train_baseline_model() -> dict:
+def train_selected_model() -> dict:
     '''
     Train the baseline classification model.
 
@@ -137,5 +137,5 @@ def train_baseline_model() -> dict:
 
 
 if __name__== "__main__":
-    metrics = train_baseline_model()
+    metrics = train_selected_model()
     print(metrics)

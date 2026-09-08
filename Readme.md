@@ -46,52 +46,67 @@ Predict the defect category of a manufactured steel plate using production measu
 - [x] Preprocessing pipeline
 - [x] Unit tests
 - [x] Baseline Logistic Regression model
-- [x] Model evaluation
 - [x] Random Forest baseline
 - [x] XGBoost baseline
-- [x] Model comparison
+- [x] Model comparison and evaluation
 - [x] MLflow experiment tracking
-- [x] XGBoost refinement
+- [x] XGBoost hyperparameter refinement
 - [x] Build and persist final model artifacts
-- [x] Sanity tests
-- [x] MLflow final mdoel tracking
-
+- [x] MLflow final model tracking
+- [x] Artifact and inference sanity tests
+- [x] FastAPI inference service
+- [x] `/health` endpoint
+- [x] `/predict` endpoint
+- [x] Pydantic request and response validation
+- [x] API key authentication
+- [x] Centralized model artifact loading with FastAPI lifespan
+- [x] Controlled inference error handling
+- [x] Request ID middleware
+- [x] Application logging
+- [x] API and logging tests
 
 ### Current Release
 
-**Version:** v0.3.0  
+**Version:** v0.4.0  
+**Release name:** FastAPI Inference API
 
-**Release name:** Model Selection & Final Training
+This release exposes the selected XGBoost model through a FastAPI
+inference service.
 
-This release completes the model development and selection process.
-Random Forest and XGBoost were evaluated and tuned using stratified
-cross-validation with Macro F1 as the primary selection metric.
+The API provides a public `/health` endpoint and a protected `/predict`
+endpoint for steel defect classification. Prediction requests are
+validated using Pydantic schemas and require an API key through the
+`X-API-Key` HTTP header.
 
-XGBoost was selected as the final model candidate after achieving the
-best cross-validated Macro F1.
+The trained model, preprocessing pipeline, label encoder, and model
+metadata are loaded once during application startup using FastAPI's
+lifespan mechanism.
 
-The selected model, preprocessing pipeline, label encoder, and metadata
-are persisted as versioned artifacts and validated through automated
-sanity tests.
+The service also includes controlled inference error handling,
+request-level identifiers for traceability, and application logging for
+successful and failed prediction requests.
 
-The next milestone focuses on exposing the trained model through a
-FastAPI inference service.
+Automated tests cover prediction behavior, request validation,
+authentication, error handling, request IDs, and logging.
 
-This release expands the machine learning pipeline to support multiple baseline algorithms, including Logistic Regression, Random Forest, and XGBoost. It introduces a generalized model factory, comparative model evaluation, MLflow experiment tracking across multiple models, and comprehensive reporting to support model selection prior to hyperparameter optimization.
+The next milestone focuses on containerizing the inference service using
+Docker.
+
 ## Quick Start
 
-Clone the repository
+### Clone the repository
 
 ```bash
-git clone ...
+git clone <https://github.com/CarlosLara25/steel-defect-api.git>
+cd steel-defect-api
 ```
 
-Create environment 
+### Create environment 
 
 ```bash
-python -m venev .venv
+python -m venv .venv
 ```
-Activate
+Activate the environment
 ```
 ...
 ```
@@ -100,38 +115,69 @@ Install
 pip install -r requirements.txt
 ```
 
-Train a model
+### Configure environment variables
 
-Select the desired model in:
+#### Create a local .env file based on .env.example.
 
-```python
+Example:
+```
+API_KEY=your-api-key
+```
+
+* The .env file should not be committed to Git.
+
+### Run the test suite
+```
+pytest
+```
+
+### Run the FastAPI application
+```
+python -m uvicorn app.main:app --reload
+```
+
+The API will be available at:
+
+http://127.0.0.1:8000
+
+Interactive API documentation:
+
+http://127.0.0.1:8000/docs
+
+#### Health check
+GET /health
+
+#### Prediction
+
+POST /predict
+
+X-API-Key: your-api-key
+
+* The request body must contain the 27 model input features.
+
+### Train baseline models
+
+#### Select the desired model in:
+
 training/config.py
 
 MODEL_NAME = RANDOM_FOREST
-```
 
 Available options:
 
-- LOGISTIC_REGRESSION
-- RANDOM_FOREST
-- XGBOOST
+LOGISTIC_REGRESSION
+RANDOM_FOREST
+XGBOOST
 
 Then run:
 
-```bash
 python -m training.train
-```
 
-Training slected model
+#### Train the selected model
 
-```bash
 python -m training.train_selected_model
-```
-
 Launch MLflow
-```
 mlflow ui
-```
 
 ## Dataset
 
@@ -293,11 +339,6 @@ including the selected hyperparameters and persisted model artifacts.
 
 ## Project Roadmap
 
-### v0.4.0
-- FastAPI inference API
-- Model artifact loading
-- Request validation
-- Prediction endpoint
 
 ### v0.5.0
 - Docker deployment
@@ -318,3 +359,7 @@ including the selected hyperparameters and persisted model artifacts.
 
 **Version:** v0.3.0  \
 **Release name:** Model Selection & Final Training
+
+**Version:** v0.4.0 \
+**Release name:** Inference API
+
