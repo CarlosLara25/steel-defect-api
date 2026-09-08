@@ -91,7 +91,7 @@ def prediction(request: Request,
                                         encoder
                                         )
 
-    logger.info("Prediction completed")
+    logger.info(f"Prediction completed request_id {request.state.request_id}")
 
     response = {
         "request_id":request_id,

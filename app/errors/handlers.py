@@ -23,7 +23,7 @@ async def prediction_error_handler(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 content={
                         "error": "prediction_failed",
-                        "detail": "An internal prediction error ocurred.",
+                        "detail": "An internal prediction error occurred.",
                         "request_id": request_id,
                 }
         )

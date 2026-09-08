@@ -1,7 +1,7 @@
 from app.errors.exceptions import PredictionError
 import logging
 
-logger = logging.getLogger(__name__)
+#logger = logging.getLogger(__name__)
 
 def prediction_service(X, preprocessor, model, encoder):
 
