@@ -64,37 +64,70 @@ Predict the defect category of a manufactured steel plate using production measu
 - [x] Request ID middleware
 - [x] Application logging
 - [x] API and logging tests
+- [x] Docker deployment
+
 
 ### Current Release
 
-**Version:** v0.4.0  
-**Release name:** FastAPI Inference API
 
-This release exposes the selected XGBoost model through a FastAPI
-inference service.
+**Version:** v0.5.0  
+**Release name:** Dockerized Inference Service
 
-The API provides a public `/health` endpoint and a protected `/predict`
-endpoint for steel defect classification. Prediction requests are
-validated using Pydantic schemas and require an API key through the
-`X-API-Key` HTTP header.
+This release containerizes the FastAPI inference service using Docker.
 
-The trained model, preprocessing pipeline, label encoder, and model
-metadata are loaded once during application startup using FastAPI's
-lifespan mechanism.
+The Docker image packages the runtime Python environment, API source code,
+model artifacts, and inference dependencies required to serve predictions.
 
-The service also includes controlled inference error handling,
-request-level identifiers for traceability, and application logging for
-successful and failed prediction requests.
+The service can be built and run locally as a container, with the API key
+provided at runtime through environment variables rather than embedded in
+the image.
 
-Automated tests cover prediction behavior, request validation,
-authentication, error handling, request IDs, and logging.
+The containerized service has been validated through the `/health` and
+protected `/predict` endpoints.
 
-The next milestone focuses on containerizing the inference service using
-Docker.
+The runtime image excludes development, training, test, and local secret
+files through `.dockerignore` and a reduced runtime dependency set.
+
+The next milestone focuses on automating testing and build workflows using
+GitHub Actions CI/CD.
 
 ## Quick Start
 
-### Clone the repository
+### Option A - Run with Docker
+
+Build the image 
+
+```bash
+docker build -t steel-defect-api:v0.5.0 .
+```
+
+Run the container
+
+``` bash
+docker run --rm -p 8000:8000 \
+  -e API_KEY=test-key \
+  steel-defect-api:v0.5.0
+```
+
+Or using the local .env file:
+
+``` bash
+docker run --rm -p 8000:8000 \
+  --env-file .env \
+  steel-defect-api:v0.5.0
+```
+
+Then verify:
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+
+### Local Development
+
+Clone the repository
+
 
 ```bash
 git clone <https://github.com/CarlosLara25/steel-defect-api.git>
@@ -340,9 +373,6 @@ including the selected hyperparameters and persisted model artifacts.
 ## Project Roadmap
 
 
-### v0.5.0
-- Docker deployment
-
 ### v0.6.0
 - GitHub Actions CI/CD
 
@@ -362,4 +392,7 @@ including the selected hyperparameters and persisted model artifacts.
 
 **Version:** v0.4.0 \
 **Release name:** Inference API
+
+**Version:** v0.5.0 \
+**Release name:** Docker deployment
 
