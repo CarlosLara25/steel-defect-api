@@ -18,6 +18,7 @@ def validate_target_encoding(targets: pd.DataFrame) -> None:
 
 
 def load_training_data() -> tuple[pd.DataFrame, pd.Series]:
+
     '''
     Load the training dataset, validate one-hot encoded target,
     convert it into a single target series, and 
