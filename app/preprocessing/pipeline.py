@@ -1,16 +1,13 @@
 # Contains the build_preprocessor() function
-
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
 
+from app.preprocessing.config import (
+    NUMERICAL_SCALER,
+)
 from app.preprocessing.features import (
     NUMERICAL_FEATURES,
     BINARY_FEATURES,
-)
-from app.preprocessing.config import (
-    NUMERICAL_SCALER,
-    RANDOM_SEED,
 )
 
 

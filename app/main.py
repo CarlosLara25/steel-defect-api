@@ -1,25 +1,18 @@
-from fastapi import FastAPI, Depends, Request
+import logging
+import pandas as pd
+from uuid import uuid4
+
 from contextlib import asynccontextmanager
-
-from app.inference.schemas import PredictionRequest, ResponseSchema
-
-from app.inference.loader import load_inference_artifacts
-
-from app.inference.service import prediction_service
+from datetime import datetime, timezone
+from fastapi import FastAPI, Depends, Request
 
 from app.dependencies import verify_api_key
-
-
-from uuid import uuid4
-from datetime import datetime, timezone
-
 from app.errors.exceptions import PredictionError
 from app.errors.handlers import prediction_error_handler
-
+from app.inference.schemas import PredictionRequest, ResponseSchema
+from app.inference.loader import load_inference_artifacts
+from app.inference.service import prediction_service
 from app.logging_config import configure_logging
-import logging
-
-import pandas as pd
 
 configure_logging()
 

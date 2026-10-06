@@ -1,8 +1,9 @@
+import logging
+
 from fastapi.testclient import TestClient
 
 from app.main import app
 
-import logging
 
 
 def test_prediction_error_returns_500(

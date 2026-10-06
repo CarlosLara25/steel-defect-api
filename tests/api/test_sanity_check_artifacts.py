@@ -1,3 +1,5 @@
+import joblib
+
 from training.config import (
     PREPROCESSOR_OUTPUT_PATH_SELECTED,
     LABEL_ENCODER_OUTPUT_PATH_SELECTED,
@@ -9,10 +11,7 @@ from training.config import (
     XGB_SELECTED_COLSAMPLE,
 )
 
-import pandas as pd
-import joblib
 
-import pytest
 
 
 #---------------------------------

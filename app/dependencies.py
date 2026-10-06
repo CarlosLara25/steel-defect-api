@@ -1,7 +1,7 @@
-from fastapi import Header, HTTPException, status
-
-from dotenv import load_dotenv
 import os
+
+from fastapi import Header, HTTPException, status
+from dotenv import load_dotenv
 
 load_dotenv()
 
