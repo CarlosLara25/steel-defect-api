@@ -5,6 +5,7 @@ matplotlib
 joblib
 mlflow
 pytest
+httpx2
 xgboost
 fastapi
 uvicorn
