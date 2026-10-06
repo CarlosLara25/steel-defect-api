@@ -1,10 +1,11 @@
 import pandas as pd
 
 from training.config import (
-    TARGET_CLASSES,
     DATASET_PATH,
     FEATURES,
+    TARGET_CLASSES,
 )
+
 
 def validate_target_encoding(targets: pd.DataFrame) -> None:
 

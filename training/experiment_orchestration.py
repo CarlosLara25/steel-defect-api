@@ -1,30 +1,27 @@
+import joblib
+import mlflow
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+from xgboost import XGBClassifier
 
-from training.tuning import tune_model
+from app.preprocessing.pipeline import build_preprocessor
 from training.config import (
+    LABEL_ENCODER_OUTPUT_PATH,
+    PREPROCESSOR_OUTPUT_PATH,
+    RANDOM_FOREST,
     RANDOM_SEED,
     TEST_SIZE,
-    PREPROCESSOR_OUTPUT_PATH,
-    LABEL_ENCODER_OUTPUT_PATH,
-    RANDOM_FOREST,
     XGBOOST,
 )
 from training.data_loader import load_training_data
-from training.target_encoder import fit_label_encoder
 from training.evaluate import evaluate_model
 from training.parameters_distributions import (
     PARAM_DISTRIBUTIONS_RF,
     PARAM_DISTRIBUTIONS_XG,
     PARAM_DISTRIBUTIONS_XG_EXP2,
 )
-
-from app.preprocessing.pipeline import build_preprocessor
-
-import mlflow
-import joblib
-from xgboost import XGBClassifier
-
+from training.target_encoder import fit_label_encoder
+from training.tuning import tune_model
 
 
 def track_experiment(model_name, search_file):

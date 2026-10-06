@@ -1,11 +1,18 @@
-import joblib
 import json
 
-from app.config import(
-    PREPROCESSOR_OUTPUT_PATH_SELECTED as PREPROCESSOR_PATH,
-    MODEL_OUTPUT_PATH_SELECTED as MODEL_PATH,
+import joblib
+
+from app.config import (
     LABEL_ENCODER_OUTPUT_PATH_SELECTED as ENCODER_PATH,
+)
+from app.config import (
     METADATA_PATH_SELECTED as METADATA_PATH,
+)
+from app.config import (
+    MODEL_OUTPUT_PATH_SELECTED as MODEL_PATH,
+)
+from app.config import (
+    PREPROCESSOR_OUTPUT_PATH_SELECTED as PREPROCESSOR_PATH,
 )
 
 

@@ -5,7 +5,6 @@ from fastapi.responses import JSONResponse
 
 from app.errors.exceptions import PredictionError
 
-
 logger = logging.getLogger(__name__)
 
 async def prediction_error_handler(

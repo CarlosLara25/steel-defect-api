@@ -1,5 +1,6 @@
 from app.errors.exceptions import PredictionError
 
+
 def prediction_service(X, preprocessor, model, encoder):
 
         

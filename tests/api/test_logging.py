@@ -4,6 +4,7 @@ from fastapi.testclient import TestClient
 
 from app.main import app
 
+
 def test_successful_prediction_is_logged(
                       unique_sample_data,
                             monkeypatch,
@@ -17,14 +18,12 @@ def test_successful_prediction_is_logged(
 
     headers = {"X-API-Key": "test-key"}
 
-    with TestClient(app) as client:
-
-        with caplog.at_level(logging.INFO):
-            response = client.post(
-                "/predict",
-                json=unique_sample_data,
-                headers={"X-API-Key": "test-key"},
-            )
+    with TestClient(app) as client, caplog.at_level(logging.INFO):
+        response = client.post(
+            "/predict",
+            json=unique_sample_data,
+            headers=headers,
+        )
 
     assert response.status_code == 200
 

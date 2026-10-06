@@ -5,7 +5,6 @@ from fastapi.testclient import TestClient
 from app.main import app
 
 
-
 def test_prediction_error_returns_500(
                             unique_sample_data,
                             monkeypatch,

@@ -1,11 +1,12 @@
 from sklearn.model_selection import RandomizedSearchCV
 
 from training.config import (
-    N_ITER,
     CV,
-    SCORING,
+    N_ITER,
     RANDOM_SEED,
+    SCORING,
 )
+
 
 def tune_model(model, param_distributions, X_train, y_train, n_iterations=N_ITER):
 

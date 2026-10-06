@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 
-from app.main import app
 from app.inference.schemas import ResponseSchema
+from app.main import app
 
 
 def test_predict_valid_request(

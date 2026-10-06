@@ -1,11 +1,9 @@
 import numpy as np
 import pandas as pd
-
 import pytest
 from sklearn.compose import ColumnTransformer
 
 from app.preprocessing.pipeline import build_preprocessor
-
 
 
 def test_build_preprocessor_return_column_transfromer():

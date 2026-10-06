@@ -6,8 +6,8 @@ from app.preprocessing.config import (
     NUMERICAL_SCALER,
 )
 from app.preprocessing.features import (
-    NUMERICAL_FEATURES,
     BINARY_FEATURES,
+    NUMERICAL_FEATURES,
 )
 
 

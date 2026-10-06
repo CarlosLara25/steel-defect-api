@@ -1,31 +1,30 @@
-from training.baseline_model import build_model
-from training.data_loader import load_training_data
-from training.config import (
-    TEST_SIZE,
-    MAX_ITERATIONS,
-    RANDOM_SEED,
-    MODEL_NAME,
-    N_ESTIMATORS,
-    CRITERION,
-    LOGISTIC_REGRESSION,
-    RANDOM_FOREST,
-    XGBOOST,
-    XGB_MAX_DEPTH,
-    XGB_LEARNING_RATE,
-    MODEL_OUTPUT_PATH,
-    PREPROCESSOR_OUTPUT_PATH,
-    CONFUSION_MATRIX_PATH,
-    CLASSIFICATION_REPORT_PATH,
-    LABEL_ENCODER_OUTPUT_PATH,
-)
-from training.evaluate import evaluate_model
-from training.target_encoder import fit_label_encoder
-
-from app.preprocessing.pipeline import build_preprocessor
-from sklearn.model_selection  import train_test_split
-
 import joblib
 import mlflow
+from sklearn.model_selection import train_test_split
+
+from app.preprocessing.pipeline import build_preprocessor
+from training.baseline_model import build_model
+from training.config import (
+    CLASSIFICATION_REPORT_PATH,
+    CONFUSION_MATRIX_PATH,
+    CRITERION,
+    LABEL_ENCODER_OUTPUT_PATH,
+    LOGISTIC_REGRESSION,
+    MAX_ITERATIONS,
+    MODEL_NAME,
+    MODEL_OUTPUT_PATH,
+    N_ESTIMATORS,
+    PREPROCESSOR_OUTPUT_PATH,
+    RANDOM_FOREST,
+    RANDOM_SEED,
+    TEST_SIZE,
+    XGB_LEARNING_RATE,
+    XGB_MAX_DEPTH,
+    XGBOOST,
+)
+from training.data_loader import load_training_data
+from training.evaluate import evaluate_model
+from training.target_encoder import fit_label_encoder
 
 
 def train_selected_model() -> dict:
