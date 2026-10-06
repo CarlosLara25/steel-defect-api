@@ -28,7 +28,7 @@ PREPROCESSOR_OUTPUT_PATH = "models/experiments/preprocessor.joblib"
 MODEL_OUTPUT_PATH = f"models/experiments/model_{MODEL_NAME}.joblib"
 CONFUSION_MATRIX_PATH = f"training/artifacts/confusion_matrix_{MODEL_NAME}.png"
 CLASSIFICATION_REPORT_PATH = f"training/artifacts/classification_report_{MODEL_NAME}.txt"
-LABEL_ENCODER_OUTPUT_PATH = f"models/experiments/label_encoding.joblib"
+LABEL_ENCODER_OUTPUT_PATH = "models/experiments/label_encoding.joblib"
 
 #---------------------------------------------------
 # model selection

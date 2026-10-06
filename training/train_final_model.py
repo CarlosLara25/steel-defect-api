@@ -1,34 +1,31 @@
+import json
+
+import joblib
+import mlflow
 from sklearn.model_selection import train_test_split
 
+from app.preprocessing.pipeline import build_preprocessor
 from training.baseline_model import build_selected_xgboost
 from training.config import (
-    RANDOM_SEED,
-    TEST_SIZE,
-    PREPROCESSOR_OUTPUT_PATH_SELECTED,
     LABEL_ENCODER_OUTPUT_PATH_SELECTED,
     METADATA_PATH_SELECTED,
     MODEL_OUTPUT_PATH_SELECTED,
     MODEL_TYPE,
+    PREPROCESSOR_OUTPUT_PATH_SELECTED,
+    RANDOM_SEED,
+    TEST_SIZE,
     VERSION_MODEL,
-    XGB_SELECTED_LEARNING_RATE,
-    XGB_SELECTED_N_ESTIMATORS,
-    XGB_SELECTED_MAX_DEPTH,
-    XGB_SELECTED_SUBSAMPLE,
-    XGB_SELECTED_COLSAMPLE,
-    XGB_SELECTION_METRIC,
     XGB_CV_MACRO_F1,
+    XGB_SELECTED_COLSAMPLE,
+    XGB_SELECTED_LEARNING_RATE,
+    XGB_SELECTED_MAX_DEPTH,
+    XGB_SELECTED_N_ESTIMATORS,
+    XGB_SELECTED_SUBSAMPLE,
+    XGB_SELECTION_METRIC,
     XGB_TEST_MACRO_F1,
-
 )
 from training.data_loader import load_training_data
 from training.target_encoder import fit_label_encoder
-
-from app.preprocessing.pipeline import build_preprocessor
-
-import mlflow
-import joblib
-import json
-
 
 
 def train_selected_xgboost() -> None:
@@ -53,7 +50,7 @@ def train_selected_xgboost() -> None:
         #---------------------------------
     
         X, y = load_training_data()
-        X_train, X_test, y_train, y_test = train_test_split(
+        X_train, _ , y_train, _ = train_test_split(
                 X,
                 y,
                 test_size=TEST_SIZE,

@@ -1,24 +1,25 @@
-from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from xgboost import XGBClassifier
 
 from training.config import (
-    RANDOM_SEED,
+    CRITERION,
+    LOGISTIC_REGRESSION,
     MAX_ITERATIONS,
     MODEL_NAME,
-    CRITERION,
     N_ESTIMATORS,
-    LOGISTIC_REGRESSION,
     RANDOM_FOREST,
-    XGBOOST,
-    XGB_MAX_DEPTH,
+    RANDOM_SEED,
     XGB_LEARNING_RATE,
-    XGB_SELECTED_LEARNING_RATE,
-    XGB_SELECTED_N_ESTIMATORS,
-    XGB_SELECTED_MAX_DEPTH,
-    XGB_SELECTED_SUBSAMPLE,
+    XGB_MAX_DEPTH,
     XGB_SELECTED_COLSAMPLE,
+    XGB_SELECTED_LEARNING_RATE,
+    XGB_SELECTED_MAX_DEPTH,
+    XGB_SELECTED_N_ESTIMATORS,
+    XGB_SELECTED_SUBSAMPLE,
+    XGBOOST,
 )
+
 
 def build_model():
     if MODEL_NAME == LOGISTIC_REGRESSION:

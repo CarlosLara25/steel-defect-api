@@ -1,20 +1,19 @@
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 from pathlib import Path
 
-from training.config import (
-    CONFUSION_MATRIX_PATH,
-    CLASSIFICATION_REPORT_PATH,
-)
-
+import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.metrics import (
     accuracy_score,
-    f1_score,
-    recall_score,
-    precision_score,
     classification_report,
     confusion_matrix,
+    f1_score,
+    precision_score,
+    recall_score,
+)
+
+from training.config import (
+    CLASSIFICATION_REPORT_PATH,
+    CONFUSION_MATRIX_PATH,
 )
 
 

@@ -3,7 +3,6 @@ from fastapi.testclient import TestClient
 from app.main import app
 
 
-
 def test_predict_with_valid_api_key(
     unique_sample_data,
     monkeypatch,

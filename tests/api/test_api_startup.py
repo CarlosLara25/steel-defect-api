@@ -1,10 +1,8 @@
-from fastapi.testclient import TestClient
-from app.inference.loader import load_inference_artifacts
-
-from app.main import app
-
 import pytest
+from fastapi.testclient import TestClient
 
+from app.inference.loader import load_inference_artifacts
+from app.main import app
 
 client = TestClient(app)
 

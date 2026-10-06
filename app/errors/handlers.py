@@ -1,9 +1,9 @@
+import logging
+
 from fastapi import Request, status
 from fastapi.responses import JSONResponse
 
 from app.errors.exceptions import PredictionError
-
-import logging
 
 logger = logging.getLogger(__name__)
 
