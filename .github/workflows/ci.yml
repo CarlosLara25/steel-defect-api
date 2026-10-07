@@ -27,3 +27,6 @@ jobs:
       
       - name: Run tests
         run: pytest
+
+      - name: Run docker
+        run: docker build -t steel-defect-api:ci .
