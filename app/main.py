@@ -1,6 +1,6 @@
 import logging
 from contextlib import asynccontextmanager
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from uuid import uuid4
 
 import pandas as pd
@@ -91,7 +91,7 @@ def prediction(request: Request,
         "prediction":prediction,
         "confidence":confidence,
         "model_version":metadata["version"],
-        "timestamp":datetime.now(timezone.utc),
+        "timestamp":datetime.now(UTC),
         }
     
     return response
