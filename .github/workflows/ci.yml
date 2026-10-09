@@ -32,6 +32,12 @@ jobs:
       - name: Run tests
         run: pytest
 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build Docker image
         run: docker build -t steel-defect-api:ci .
 
