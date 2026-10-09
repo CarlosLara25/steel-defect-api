@@ -77,17 +77,15 @@ jobs:
           with:
             workload_identity_provider: projects/224196183004/locations/global/workloadIdentityPools/github-pool/providers/github-provider
             service_account: github-actions-publisher@steel-defects-classifier-01.iam.gserviceaccount.com
-            create_credentials_file: true
+            token_format: acces_token
 
-        - name: Set up Google Cloud CLI
-          uses: google-github-actions/setup-gcloud@v3
-
-        - name: Configure Docker authentication
-          run: |
-            gcloud auth configure-docker \
-              us-south1-docker.pkg.dev \
-              --quiet
-
+        - name: Log in to Artifact Registry
+          uses: docker/login-action@v3
+          with:
+            registry: us-south1-docker.pkg.dev
+            username: oauth2accesstoken
+            password: ${{ steps.auth.outputs.access_token }}
+        
         - name: Build release image
           run: |
             docker build \
