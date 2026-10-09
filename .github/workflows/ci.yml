@@ -91,3 +91,8 @@ jobs:
             docker build \
               -t us-south1-docker.pkg.dev/steel-defects-classifier-01/steel-defect-api/steel-defect-api:v0.6.0 \
               .
+
+        - name: Push release image
+          run: |
+            docker push \
+              us-south1-docker.pkg.dev/steel-defects-classifier-01/steel-defect-api/steel-defect-api:v0.6.0
